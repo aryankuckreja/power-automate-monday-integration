@@ -1,0 +1,34 @@
+# Generic pattern written for this case study (not company code).
+# Look up an item by name within a board, then create or update it.
+
+# 1. Find candidate items on the board
+query FindItems($boardId: ID!, $name: String!) {
+  items_page_by_column_values(
+    board_id: $boardId
+    columns: [{ column_id: "name", column_values: [$name] }]
+    limit: 5
+  ) {
+    items { id name group { id } }
+  }
+}
+
+# 2a. Create the item if no normalised match was found
+mutation CreateItem($boardId: ID!, $groupId: String!, $name: String!, $values: JSON!) {
+  create_item(board_id: $boardId, group_id: $groupId, item_name: $name, column_values: $values) {
+    id
+  }
+}
+
+# 2b. Otherwise update the mapped columns
+mutation UpdateItem($boardId: ID!, $itemId: ID!, $values: JSON!) {
+  change_multiple_column_values(board_id: $boardId, item_id: $itemId, column_values: $values) {
+    id
+  }
+}
+
+# 3. One subitem per benefit
+mutation CreateSubitem($parentId: ID!, $name: String!, $values: JSON!) {
+  create_subitem(parent_item_id: $parentId, item_name: $name, column_values: $values) {
+    id
+  }
+}
