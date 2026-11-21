@@ -73,3 +73,7 @@ examples/
 ## Tech
 
 Power Automate (cloud flows, HTTP actions, expressions, scheduled triggers), monday.com GraphQL API, Office Scripts (TypeScript), Excel (protected templates, data validation), SharePoint.
+
+## How this was built
+
+I use Claude as a working part of my development process. On this project I owned the flow design, all platform configuration, every test run and the production debugging, including each isolation step in the header bug. Claude drafted Power Automate expressions, Office Script code and documentation under my direction, and I reviewed and tested each change. This write-up was also drafted with Claude.
